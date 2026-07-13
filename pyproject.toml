@@ -1,0 +1,19 @@
+
+[project]
+name = "micropython-tsdb"
+version = "0.0.1"
+dependencies = [
+    "mpflash",
+    "esptool",
+    "mpremote",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pandas",
+    "pyarrow",
+]
+
+[tool.setuptools]
+packages = ["software"]
+
