@@ -1,17 +1,20 @@
 
 # micropython-tsdb
 
-A tiny time-series database / datalake for MicroPython devices.
+A tiny time-series database / datalake for [MicroPython](https://micropython.org/).
 
 ## Status
-PLACEHOLDER repository. Code will be imported from https://github.com/jonnor/motion-machine/
+**PROTOTYPE**. WORK IN PROGRESS.
+Not suitable for general consumption yet.
 
-Specifically
+## Features
 
-- https://github.com/jonnor/motion-machine/blob/master/firmware/microhive.py
-- https://github.com/jonnor/motion-machine/blob/master/firmware/microhive_api.py
-- https://github.com/jonnor/motion-machine/blob/master/firmware/delta_simple9.py
-- https://github.com/jonnor/motion-machine/blob/master/firmware/raw16.py
-- https://github.com/jonnor/motion-machine/blob/master/firmware/raw16col.py
-- https://github.com/jonnor/motion-machine/blob/master/tests/test_delta_simple9.py
-- https://github.com/jonnor/motion-machine/blob/master/tests/test_microhive_one.py
+- Fast lookup of data
+- Low memory usage, using streaming
+- Partitioned on-disk layout. Apache Hive style
+- Supports 16-bit integer array
+- Per-resource configurable chunk storage (columnar/row-based/compressed)
+- No external dependencies outside of MicroPython standard library
+- Optional HTTP API integation for MicroDot
+- Optional timeseries-aware compression (delta-encoding + simple9 packing)
+
