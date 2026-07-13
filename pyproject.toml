@@ -6,6 +6,7 @@ dependencies = [
     "mpflash",
     "esptool",
     "mpremote",
+    "jonnor-micropython",
 ]
 
 [project.optional-dependencies]
@@ -15,5 +16,5 @@ dev = [
 ]
 
 [tool.setuptools]
-packages = ["software"]
+packages = []
 
