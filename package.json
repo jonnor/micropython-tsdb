@@ -1,0 +1,12 @@
+{
+  "urls": [
+    ["tsdb/core.py", "github:jonnor/micropython-tsdb/tsdb/core.py"],
+    ["tsdb/web.py", "github:jonnor/micropython-tsdb/tsdb/web.py"],
+    ["tsdb/delta_simple9.py", "github:jonnor/micropython-tsdb/tsdb/delta_simple9.py"],
+    ["tsdb/raw16.py", "github:jonnor/micropython-tsdb/tsdb/raw16.py"],
+    ["tsdb/raw16col.py", "github:jonnor/micropython-tsdb/tsdb/raw16col.py"]
+  ],
+  "deps": [
+  ],
+  "version": "0.1"
+}

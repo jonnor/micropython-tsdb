@@ -19,6 +19,8 @@ import asyncio
 import time
 import array
 
+from microdot import Response
+
 # ---------------------------------------------------------------------------
 # Minimal .npy header writer (little-endian int16, C order, 2D)
 # Avoids needing npyfile.Writer to accept a file-like object.

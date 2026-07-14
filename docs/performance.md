@@ -45,6 +45,42 @@ With MicroDot.
 
 
 
+# Compression
+
+delta-zigzag-simple9b did not compress PAMAP2 features much. Net loss.
+Would likely need to add quantization to get compression benefits?
+
+delta-zigzag-simple9b. 406 kB in 18 seconds. Only 22 kB/s.
+raw16. 396 kB in 3 seconds. 132 kB/s.
+Tested maximum for reads otherwise is around 210 kB/s.
+
+
+```
+mpremote run tests/bench_microhive.py
+MicroHive benchmark  cols=7  hop=1000000us  gran=hour
+platform: esp32
+
+--- raw filesystem ---
+  open+write+flush+close 1KB x50: 3402ms  (68.0 ms/op)
+  open+read+close 1KB x50:        388ms  (7.8 ms/op)
+
+--- append ---
+  append 1h x7cols chunk=100: 2393ms total  1.5 rows/ms  66.5 ms/call
+  append 1h x7cols chunk=1000: 1584ms total  2.3 rows/ms  396.0 ms/call
+
+--- query (after 1h write, chunk=100) ---
+  append 1h x7cols chunk=100: 2463ms total  1.5 rows/ms  68.4 ms/call
+  query  3600rows chunk=64: 736ms  4.9 rows/ms  OK
+  query  3600rows chunk=256: 738ms  4.9 rows/ms  OK
+  query  3600rows chunk=512: 728ms  4.9 rows/ms  OK
+
+--- query raw (row-major) codec ---
+  query  3600rows chunk=256: 73ms  49.3 rows/ms  OK
+--- query raw (col-major) codec ---
+  query  3600rows chunk=256: 392ms  9.2 rows/ms  OK
+
+```
+
 ## HTTP testing from RAM
 
 Using ESP32 pico in M5StickC PLUS 2 over WiFi

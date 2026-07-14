@@ -12,7 +12,7 @@ import os
 import sys
 import time
 
-from tsdb import tsdb as mh
+from tsdb import core as mh
 
 # ---------------------------------------------------------------------------
 # Helpers

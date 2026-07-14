@@ -3,6 +3,8 @@
 
 A tiny time-series database / datalake for [MicroPython](https://micropython.org/).
 
+Originally developed together with the [emlearn-micropython project](https://github.com/emlearn/emlearn-micropython) (a Digital Signal Processing and Machine Learning library for MicroPython).
+
 ## Status
 **PROTOTYPE**. WORK IN PROGRESS.
 Not suitable for general consumption yet.
