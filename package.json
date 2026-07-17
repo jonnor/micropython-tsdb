@@ -1,5 +1,6 @@
 {
   "urls": [
+    ["tsdb/__init__.py", "github:jonnor/micropython-tsdb/tsdb/__init__.py"],
     ["tsdb/core.py", "github:jonnor/micropython-tsdb/tsdb/core.py"],
     ["tsdb/web.py", "github:jonnor/micropython-tsdb/tsdb/web.py"],
     ["tsdb/delta_simple9.py", "github:jonnor/micropython-tsdb/tsdb/delta_simple9.py"],
