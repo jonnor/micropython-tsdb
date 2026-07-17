@@ -1,13 +1,14 @@
 """
-microhive.py - Timeseries database for MicroPython / ESP32
+tsdb/core.py - Timeseries database for MicroPython
 
 Partition layout (hive-style):
   date=YYYY-MM-DD/                    (granularity='date')
   date=YYYY-MM-DD/hour=HH/            (granularity='hour')
   date=YYYY-MM-DD/hour=HH/min=MM/     (granularity='minute')
 
-Each partition contains one .des9 file per resource, named:
+Each partition contains one file per resource.
   <resource>_<first_row>.des9
+
 where first_row is the row offset from partition start of the first stored sample.
 
 Time is dense: (first_row + row_index) * hop_us = offset from partition start.
@@ -240,7 +241,7 @@ def _stream_segment(codec, path, n_cols, part_row_start, part_row_end, first_row
     finally:
         r.close()
 # ---------------------------------------------------------------------------
-class MicroHive:
+class TSDB:
     """
     Timeseries database for MicroPython.
 

@@ -1,5 +1,5 @@
 """
-microhive_api.py - HTTP API for MicroHive using Microdot
+tsbd/web.py - HTTP API for TSDB using Microdot
 
 Endpoint:
     GET /query?resource=<n>&start=<epoch_s>&end=<epoch_s>[&chunk_rows=<n>]
@@ -7,10 +7,6 @@ Endpoint:
 Returns the query result as a streaming .npy file (application/octet-stream).
 The .npy header is written directly (no npyfile.Writer dependency) and data
 chunks are streamed as raw bytes, one per get_timerange yield.
-
-MicroPython note:
-    Async generator functions (async def + yield) are not supported in MicroPython.
-    Streaming uses a class-based generator compatible with both platforms.
 """
 
 import os
@@ -37,12 +33,13 @@ def _npy_header(n_rows, n_cols):
     return b'\x93NUMPY\x01\x00' + struct.pack('<H', len(desc_bytes)) + desc_bytes
 
 # ---------------------------------------------------------------------------
-# Sync class-based generator — MicroPython compatible streaming response
+# MicroPython compatible streaming response
 # ---------------------------------------------------------------------------
-
+# NOTE: Async generator functions (async def + yield) not supported in MicroPython.
+# Usinga class-based generator compatible with both CPython and MicroPython.
 class _NpyStreamGenerator:
     """
-    Streams a MicroHive query result as a .npy file, one bytes chunk per yield:
+    Streams a query result as a .npy file, one bytes chunk per yield:
       - First yield: .npy header (shape + dtype descriptor)
       - Subsequent yields: raw int16 bytes for each chunk_rows block of data
     """

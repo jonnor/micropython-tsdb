@@ -5,13 +5,13 @@ import os
 import sys
 import time
 
-from tsdb import core as mh
+from tsdb import core as tsdb_core
 
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
 
-BASE = '/tmp/mh_test'
+BASE = '/tmp/tsdb_core_test'
 
 def _ms():
     try:
@@ -48,7 +48,7 @@ def _rmdir_recursive(path):
 
 def setup():
     _rmdir_recursive(BASE)
-    mh._makedirs(BASE)
+    tsdb_core._makedirs(BASE)
     try:
         import gc; gc.collect()
     except: pass
@@ -59,8 +59,8 @@ def check(cond, msg):
 
 def _base_epoch():
     """Fixed epoch: 2025-01-01 00:00:00 as Unix epoch seconds.
-    The public API of microhive takes Unix epoch seconds."""
-    return mh._parts_to_epoch(2025, 1, 1, 0, 0, 0)
+    The public API takes Unix epoch seconds."""
+    return tsdb_core._parts_to_epoch(2025, 1, 1, 0, 0, 0)
 
 def _collect(db, resource, start_s, end_s, chunk_rows=64):
     """Collect all rows from get_timerange into a single array."""
@@ -70,7 +70,7 @@ def _collect(db, resource, start_s, end_s, chunk_rows=64):
     return out
 
 def _make_db(granularity='hour', hop_us=1_000_000, n_cols=2, debug=False):
-    return mh.MicroHive(BASE, {
+    return tsdb_core.TSDB(BASE, {
         'sensor': {
             'hop': hop_us,
             'columns': ['a', 'b'][:n_cols],
@@ -293,7 +293,7 @@ def test_n_partitions_correct():
 
 def test_reopen_and_append():
     """
-    Append to a partition, close the MicroHive, reopen, append more.
+    Append to a partition, close the database, reopen, append more.
     delta_simple9 Writer appends to existing .des9 files transparently.
     """
     setup()
@@ -304,7 +304,7 @@ def test_reopen_and_append():
     db1 = _make_db()
     db1.append_data('sensor', data1, timestamp_s=t0)
 
-    db2 = _make_db()   # fresh MicroHive instance, same directory
+    db2 = _make_db()   # fresh instance, same directory
     db2.append_data('sensor', data2, timestamp_s=t0 + 100)
 
     out = _collect(db2, 'sensor', t0, t0 + 200)
@@ -329,7 +329,7 @@ def test_12h_hourly_scenario():
     total_s   = 12 * 3600
     chunk_n   = 1000
 
-    db = mh.MicroHive(BASE, {
+    db = tsdb_core.TSDB(BASE, {
         'sensor': {
             'hop': hop_us,
             'columns': ['a', 'b'],
