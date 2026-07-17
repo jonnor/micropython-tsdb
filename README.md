@@ -20,3 +20,30 @@ Not suitable for general consumption yet.
 - Optional HTTP API integation for MicroDot
 - Optional timeseries-aware compression (delta-encoding + simple9 packing)
 
+## Installing
+
+Install with `mip`.
+
+With mpremote for connected device
+
+    mpremote mip install github:jonnor/micropython-tsdb
+
+On PC for Unix/Windows port
+
+    micropython -m mip install github:jonnor/micropython-tsdb
+
+
+## TODO
+
+- Add tests covering MicroDot API
+- Change naming away from "Hive"
+- Cleanup API generally
+- Add usage examples.
+
+## Usage
+
+- Insert now data
+- Query range
+- Insert historical data. Ex import from file
+- Chunk deletion
+- 
