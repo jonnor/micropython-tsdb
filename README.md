@@ -33,10 +33,19 @@ On PC for Unix/Windows port
     micropython -m mip install github:jonnor/micropython-tsdb
 
 
+## Developing
+
+### Running tests on PC
+
+Make sure `micropython` is installed.
+
+Run tests against in-tree tsbd module.
+
+    MICROPYPATH=. micropython tests/test_all.py
+
 ## TODO
 
 - Add tests covering MicroDot API
-- Change naming away from "Hive"
 - Cleanup API generally
 - Add usage examples.
 
