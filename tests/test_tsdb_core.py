@@ -1,10 +1,3 @@
-"""
-test_microhive.py - Test suite for microhive.py (delta_simple9 backend)
-
-Run with:
-    micropython test_microhive.py
-    python3 test_microhive.py
-"""
 
 import array
 import math

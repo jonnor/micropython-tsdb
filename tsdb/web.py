@@ -48,7 +48,15 @@ class _NpyStreamGenerator:
     """
 
     def __init__(self, db, resource, start_s, end_s, chunk_rows, n_cols, hop_us):
-        ...
+        self._db         = db
+        self._resource   = resource
+        self._start_s    = start_s
+        self._end_s      = end_s
+        self._chunk_rows = chunk_rows
+        self._n_cols     = n_cols
+        self._hop_us     = hop_us
+        self._iter       = None
+        self._bytes_sent = 0
 
     def __iter__(self):
         return self
@@ -60,8 +68,11 @@ class _NpyStreamGenerator:
         yield _npy_header(total_rows, self._n_cols)
 
         # Subsequent chunks: raw bytes per query chunk
-        gen = self._db.get_timerange(self._resource, self._start_s, self._end_s, chunk_rows=self._chunk_rows):
-        for chunk in gen:
+        for chunk in self._db.get_timerange(
+                self._resource, self._start_s, self._end_s,
+                chunk_rows=self._chunk_rows):
+            self._bytes_sent += len(chunk)
+            print('stream-generator-chunk', len(chunk), self._bytes_sent)
             yield bytes(chunk)
 
     def __next__(self):
@@ -103,12 +114,12 @@ def add_routes(app, db):
     @app.get('/query')
     async def query(request):
 
-        from microdot import Response
-
         resource   = request.args.get('resource')
         start_s    = request.args.get('start')
         end_s      = request.args.get('end')
         chunk_rows = int(request.args.get('chunk_rows', '600'))
+
+        print('query start', resource, start_s, end_s, chunk_rows)
 
         if not resource or not start_s or not end_s:
             return 'Missing resource, start or end', 400
